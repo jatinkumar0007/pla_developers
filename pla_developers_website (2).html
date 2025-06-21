@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLA Developers - Premium Real Estate in Kotkasim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: slideDown 1s ease-out forwards;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23e8f4fd" width="1200" height="600"/><polygon fill="%234a90e2" points="0,300 300,150 600,300 900,100 1200,250 1200,600 0,600"/><polygon fill="%236ba3eb" points="0,400 200,350 500,450 800,300 1200,400 1200,600 0,600"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.7);
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            font-weight: 400;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+        }
+
+        .hero p:last-of-type {
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 18px 36px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255,215,0,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255,215,0,0.6);
+            background: linear-gradient(45deg, #ffed4e, #ffd700);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px) scale(1.02);
+            transition: all 0.1s ease;
+        }
+
+        /* Properties Section */
+        .properties {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2a5298;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            margin: 1rem auto;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .property-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .property-card.animate {
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .property-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23ffffff" opacity="0.1" width="100" height="100"/><circle fill="%23ffffff" opacity="0.05" cx="20" cy="20" r="15"/><circle fill="%23ffffff" opacity="0.05" cx="80" cy="80" r="20"/></svg>');
+        }
+
+        .property-content {
+            padding: 2rem;
+        }
+
+        .property-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2a5298;
+        }
+
+        .property-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .property-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .property-features li {
+            padding: 0.3rem 0;
+            color: #666;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .property-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: #e9ecef;
+            transform: scale(1.05);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: #ffd700;
+        }
+
+        .map-container {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .map-link {
+            display: block;
+            background: white;
+            color: #333;
+            padding: 60px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .map-link:hover {
+            background: #f8f9fa;
+            transform: scale(1.02);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in-load {
+            opacity: 0;
+            animation: fadeIn 1.2s ease-in-out forwards;
+        }
+
+        .slide-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s ease-out forwards;
+        }
+
+        .slide-down {
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideDown 1s ease-out forwards;
+        }
+
+        /* Animation Delays */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(30, 60, 114, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 1rem 2rem;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            /* Header Mobile */
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            nav {
+                position: relative;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            /* Hero Mobile */
+            .hero {
+                padding: 0 20px;
+                min-height: 100vh;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+                margin-bottom: 1rem;
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                line-height: 1.5;
+            }
+
+            .hero p:last-of-type {
+                margin-bottom: 2rem;
+            }
+
+            .cta-button {
+                padding: 16px 32px;
+                font-size: 1rem;
+                width: auto;
+                min-width: 200px;
+                text-align: center;
+            }
+
+            /* Sections Mobile */
+            .properties,
+            .about,
+            .contact {
+                padding: 60px 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+                padding: 0 10px;
+            }
+
+            /* Property Cards Mobile */
+            .property-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .property-card {
+                margin: 0 10px;
+            }
+
+            .property-content {
+                padding: 1.5rem;
+            }
+
+            .property-title {
+                font-size: 1.3rem;
+            }
+
+            .property-price {
+                font-size: 1.2rem;
+            }
+
+            /* About Section Mobile */
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-text {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .feature-item {
+                padding: 1.2rem;
+                margin: 0 10px;
+            }
+
+            .feature-icon {
+                font-size: 2rem;
+            }
+
+            /* Contact Section Mobile */
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-info,
+            .map-container {
+                margin: 0 10px;
+            }
+
+            .contact-item {
+                margin-bottom: 1.2rem;
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            .map-link {
+                padding: 50px 15px;
+                font-size: 1rem;
+            }
+
+            /* Footer Mobile */
+            footer {
+                padding: 1.5rem 0;
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+
+        /* Small Mobile Phones */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .cta-button {
+                padding: 14px 28px;
+                font-size: 0.95rem;
+                min-width: 180px;
+            }
+
+            .section-title {
+                font-size: 1.7rem;
+            }
+
+            .property-card {
+                margin: 0 5px;
+            }
+
+            .property-content {
+                padding: 1.2rem;
+            }
+
+            .contact-info,
+            .map-container,
+            .feature-item {
+                margin: 0 5px;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .property-card:hover {
+                transform: none;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .cta-button:hover {
+                transform: none;
+                background: linear-gradient(45deg, #ffd700, #ffed4e);
+                box-shadow: 0 8px 25px rgba(255,215,0,0.4);
+            }
+
+            .feature-item:hover {
+                transform: none;
+                background: #f8f9fa;
+            }
+
+            /* Better touch targets */
+            .cta-button,
+            .map-link {
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .contact-item a {
+                padding: 10px 0;
+                display: inline-block;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">PLA DEVELOPERS</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#properties">Properties</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-nav" id="mobileNav">
+                <a href="#home" onclick="closeMobileMenu()">Home</a>
+                <a href="#properties" onclick="closeMobileMenu()">Properties</a>
+                <a href="#about" onclick="closeMobileMenu()">About</a>
+                <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in-load delay-1">PLA DEVELOPERS</h1>
+            <p class="slide-up delay-2">Trusted Real Estate Solutions in Kotkasim</p>
+            <p class="slide-up delay-3">Your Gateway to Prime Agricultural Land, Residential Plots & Commercial Spaces</p>
+            <a href="#properties" class="cta-button fade-in-load delay-4">Explore Properties</a>
+        </div>
+    </section>
+
+    <!-- Properties Section -->
+    <section id="properties" class="properties">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Premium Properties</h2>
+            
+            <div class="property-grid">
+                <!-- Agricultural Land -->
+                <div class="property-card fade-in">
+                    <div class="property-image">🌾</div>
+                    <div class="property-content">
+                        <h3 class="property-title">Agricultural Land</h3>
+                        <div class="property-price">Contact Us for Pricing</div>
+                        <ul class="property-features">
+                            <li>High water level guaranteed</li>
+                            <li>Fertile soil quality</li>
+                            <li>Easy access roads</li>
+                            <li>Perfect for farming & agriculture</li>
+                            <li>Government approved documents</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Residential Plots -->
+                <div class="property-card fade-in">
+                    <div class="property-image">🏘️</div>
+                    <div class="property-content">
+                        <h3 class="property-title">Residential Plots</h3>
+                        <div class="property-price">₹6,000 per sq. yard</div>
+                        <ul class="property-features">
+                            <li>Ready to construct plots</li>
+                            <li>Excellent connectivity</li>
+                            <li>Peaceful residential area</li>
+                            <li>All amenities nearby</li>
+                            <li>Clear title & documentation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Commercial Shops -->
+                <div class="property-card fade-in">
+                    <div class="property-image">🏪</div>
+                    <div class="property-content">
+                        <h3 class="property-title">Commercial Shops</h3>
+                        <div class="property-price">Reasonable Pricing</div>
+                        <ul class="property-features">
+                            <li>Prime commercial location</li>
+                            <li>High footfall area</li>
+                            <li>Perfect for retail business</li>
+                            <li>Good transport connectivity</li>
+                            <li>Investment opportunity</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title fade-in">Why Choose PLA Developers</h2>
+            <div class="about-content">
+                <div class="fade-in">
+                    <p class="about-text">
+                        PLA Developers is your trusted partner in real estate solutions in Kotkasim. 
+                        We specialize in providing premium agricultural land, residential plots, and 
+                        commercial spaces with excellent connectivity and infrastructure.
+                    </p>
+                    <p class="about-text">
+                        Located strategically near Sainik Vishram Grah on Rewari-Kotkasim Road, 
+                        our properties offer the perfect blend of accessibility and investment potential.
+                    </p>
+                </div>
+                <div class="features-grid fade-in">
+                    <div class="feature-item">
+                        <div class="feature-icon">🚗</div>
+                        <h4>Excellent Transport</h4>
+                        <p>Good connectivity via road</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📍</div>
+                        <h4>Prime Location</h4>
+                        <p>Near Sainik Vishram Grah</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💧</div>
+                        <h4>High Water Level</h4>
+                        <p>Assured water supply</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📋</div>
+                        <h4>Clear Documentation</h4>
+                        <p>Legal & approved papers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Get in Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info fade-in">
+                    <h3 style="margin-bottom: 2rem; font-size: 1.5rem;">Contact Information</h3>
+                    
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div>
+                            <strong>Phone:</strong><br>
+                            <a href="tel:7339794558" style="color: #ffd700; text-decoration: none;">7339794558</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <strong>Location:</strong><br>
+                            Near Sainik Vishram Grah,<br>
+                            Rewari-Kotkasim Road,<br>
+                            Kotkasim, Khairthal-Tijara (Raj.)
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">🏢</span>
+                        <div>
+                            <strong>Company:</strong><br>
+                            PLA Developers<br>
+                            <em>Your Real Estate Partner</em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="map-container fade-in">
+                    <h3 style="margin-bottom: 1rem; text-align: center;">Find Us on Map</h3>
+                    <a href="https://maps.app.goo.gl/J1erL372tW3szW976" target="_blank" class="map-link">
+                        🗺️<br>
+                        Click to Open Location<br>
+                        <small>View on Google Maps</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 PLA Developers. All rights reserved. | Premium Real Estate Solutions in Kotkasim</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            mobileNav.classList.toggle('active');
+            menuBtn.style.transform = mobileNav.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0deg)';
+        }
+
+        function closeMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            mobileNav.classList.remove('active');
+            menuBtn.style.transform = 'rotate(0deg)';
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const mobileNav = document.getElementById('mobileNav');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!menuBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        // Enhanced scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add staggered delay for property cards
+                    if (entry.target.classList.contains('property-card')) {
+                        setTimeout(() => {
+                            entry.target.classList.add('animate');
+                        }, index * 150);
+                    } else {
+                        entry.target.classList.add('visible');
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Observe property cards for staggered animation
+        document.querySelectorAll('.property-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth page load animations
+        window.addEventListener('load', () => {
+            document.body.style.overflow = 'visible';
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(30, 60, 114, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Phone number click tracking
+        document.querySelector('a[href^="tel:"]').addEventListener('click', function() {
+            console.log('Phone number clicked: ' + this.href);
+        });
+    </script>
+</body>
+</html>
